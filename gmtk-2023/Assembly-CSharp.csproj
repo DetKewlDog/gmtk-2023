@@ -36,10 +36,15 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\CameraController.cs" />
-     <Compile Include="Assets\DamageOnTouch.cs" />
-     <Compile Include="Assets\Health.cs" />
-     <Compile Include="Assets\PlayerController.cs" />
+     <Compile Include="Assets\Enemy.cs" />
+     <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\DamageOnTouch.cs" />
+     <Compile Include="Assets\Scripts\Health.cs" />
+     <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\ThrowableHandler.cs" />
+     <Compile Include="Assets\Scripts\WeaponHandler.cs" />
+     <Compile Include="Assets\Scripts\WeaponSO.cs" />
+     <None Include="Assets\Resources\Shaders\OutlineShader.shader" />
     <Reference Include="UnityEngine">
         <HintPath>E:/INSTALLATIONS/Unity Editors/2019.4.24f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 movementVector;
 
-    void Start() => PlayerController.instance = this;
+    void Awake() => PlayerController.instance = this;
     void FixedUpdate() {
         movementVector =
             (Input.GetKey(KeyCode.D) ? Vector2.right : Vector2.zero) +

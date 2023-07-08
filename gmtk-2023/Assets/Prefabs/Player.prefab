@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5503669907605486252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7500301274339647662}
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0ccc508108fa6ed4fa11b4a467d7f609, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b57d5041a9ce4d049a90e87016ce53c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 5927397696131568795}
   - component: {fileID: 6451018221901720529}
   - component: {fileID: 7005083898632987018}
+  - component: {fileID: 7484650516918116294}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -125,11 +126,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5693364993806362852}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e44bf73677e2ae0458b096af19d9a7d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bc0075a880c84244ab0b2e73b76b597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5927397696131568795}
-  velocity: 12
+  velocity: 20
 --- !u!50 &5927397696131568795
 Rigidbody2D:
   serializedVersion: 4
@@ -160,7 +161,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5693364993806362852}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee7ca17a5ca3b844bb94cef58ffd3ae0, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b006bfb4dac5854b8d51637fa272b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
@@ -220,3 +221,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &7484650516918116294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5693364993806362852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9750681610807b043b94e7aa3ee01653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialWeapon: {fileID: 11400000, guid: 9f1eedc5c6cf16b4d95936a8eb63fc07, type: 2}
+  outlineMat: {fileID: 2100000, guid: bd86d0802ddb7db46afcfb10eeddb10b, type: 2}
+  bloodEffect: {fileID: 5863038563935481535, guid: 570d8f40441eef84ea160b5cb70a887d,
+    type: 3}

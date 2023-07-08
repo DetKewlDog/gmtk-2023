@@ -6,7 +6,7 @@ public class Health : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
 
-    public int invCooldown;
+    public float invCooldown;
     private bool canBeDamaged = true;
 
     public UnityEvent OnDeath;

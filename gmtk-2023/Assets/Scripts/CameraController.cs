@@ -6,6 +6,6 @@ public class CameraController : MonoBehaviour
     void FixedUpdate() {
         pos = PlayerController.instance.transform.position;
         pos.z = -10;
-        transform.position = pos;
+        transform.position = Vector3.Slerp(transform.position, pos, 5 * Time.deltaTime);
     }
 }
