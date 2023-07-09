@@ -2,29 +2,25 @@
 
 public class WeaponHandler : MonoBehaviour
 {
-    public WeaponSO initialWeapon;
-    public Material outlineMat;
     public GameObject bloodEffect;
+    public WeaponSO currentWeapon;
     Camera mainCamera;
-    GameObject currentWeapon;
+    GameObject currentWeaponGO;
     DamageOnTouch dot;
     bool isAttacking = false;
 
     float distanceFromPlayer = 1.25f;
 
 
-    void Start() {
-        mainCamera = Camera.main;
-        EquipWeapon(initialWeapon);
-    }
+    void Start() => mainCamera = Camera.main;
 
     void Update() {
-        if (!currentWeapon) return;
+        if (!currentWeaponGO) return;
 
         Vector2 direction = mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        currentWeapon.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        currentWeapon.transform.localPosition = distanceFromPlayer * Vector3.one * direction.normalized;
+        currentWeaponGO.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        currentWeaponGO.transform.localPosition = distanceFromPlayer * Vector3.one * direction.normalized;
 
         if (Input.GetKey(KeyCode.Mouse0)) {
             if (!isAttacking) StartCoroutine(Attack());
@@ -41,50 +37,55 @@ public class WeaponHandler : MonoBehaviour
         var waitForEndOfFrame = new WaitForEndOfFrame();
         Vector2 scale = Vector2.one;
         for (float i = 0; i < 0.2f * 60; i++) {
-            distanceFromPlayer = Mathf.Lerp(1.25f, 2.5f, i / (0.2f * 60));
-            scale.x = Mathf.Lerp(1, 1.5f, i / (0.2f * 60));
-            currentWeapon.transform.localScale = scale;
+            distanceFromPlayer = Mathf.Lerp(1.25f, 3.5f, i / (0.2f * 60));
+            scale.x = Mathf.Lerp(1, 1.1f, i / (0.2f * 60));
+            currentWeaponGO.transform.localScale = scale;
             yield return waitForEndOfFrame;
         }
         dot.enabled = false;
         for (float i = 0; i < 0.2f * 60; i++) {
-            distanceFromPlayer = Mathf.Lerp(2.5f, 1.25f, i / (0.2f * 60));
-            scale.x = Mathf.Lerp(1.5f, 1, i / (0.2f * 60));
-            currentWeapon.transform.localScale = scale;
+            distanceFromPlayer = Mathf.Lerp(3.5f, 1.25f, i / (0.2f * 60));
+            scale.x = Mathf.Lerp(1.1f, 1, i / (0.2f * 60));
+            currentWeaponGO.transform.localScale = scale;
             yield return waitForEndOfFrame;
         }
         isAttacking = false;
     }
 
-    void EquipWeapon(WeaponSO weapon) {
-        currentWeapon = new GameObject();
-        currentWeapon.transform.SetParent(transform);
+    public void EquipWeapon(WeaponSO weapon) {
+        if (currentWeaponGO != null) Destroy(currentWeaponGO);
+        currentWeapon = weapon;
+        currentWeaponGO = new GameObject();
+        currentWeaponGO.transform.SetParent(transform);
 
-        var sr = currentWeapon.AddComponent<SpriteRenderer>();
+        currentWeaponGO.layer = LayerMask.NameToLayer("Weapon");
+
+        var sr = currentWeaponGO.AddComponent<SpriteRenderer>();
         sr.sprite = weapon.sprite;
-        sr.material = outlineMat;
+        sr.sortingOrder = 1;
 
-        dot = currentWeapon.AddComponent<DamageOnTouch>();
+        dot = currentWeaponGO.AddComponent<DamageOnTouch>();
         dot.damageToApply = weapon.damage;
         dot.targetLayers = 1 << LayerMask.NameToLayer("Enemy");
         dot.enabled = false;
 
-        var collider = currentWeapon.AddComponent<BoxCollider2D>();
+        var collider = currentWeaponGO.AddComponent<BoxCollider2D>();
 
-        var rb = currentWeapon.AddComponent<Rigidbody2D>();
+        var rb = currentWeaponGO.AddComponent<Rigidbody2D>();
         rb.mass = 0;
         rb.gravityScale = 0;
     }
 
     void ThrowWeapon() {
-        currentWeapon.transform.SetParent(null);
-        var rb = currentWeapon.GetComponent<Rigidbody2D>();
-        Vector2 direction = mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        rb.AddForce(Vector2.one * direction / 40);
+        currentWeaponGO.transform.SetParent(null);
+        var rb = currentWeaponGO.GetComponent<Rigidbody2D>();
+        Vector2 direction = (mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        rb.AddForce(Vector2.one * direction / 2);
         dot.enabled = true;
         dot.damageToApply *= 10;
-        var handler = currentWeapon.AddComponent<ThrowableHandler>();
+        var handler = currentWeaponGO.AddComponent<ThrowableHandler>();
         handler.bloodEffect = bloodEffect;
+        currentWeaponGO = null;
         currentWeapon = null;
     }
 }

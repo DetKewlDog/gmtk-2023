@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
     public float invCooldown;
     private bool canBeDamaged = true;
 
+    public UnityEvent OnDamage;
     public UnityEvent OnDeath;
     public UnityEvent OnRespawn;
 
@@ -16,21 +17,16 @@ public class Health : MonoBehaviour
         if (!canBeDamaged) return;
         canBeDamaged = false;
         currentHealth -= damageAmount;
-        print($"took damage! {currentHealth} {maxHealth}");
         if (currentHealth <= 0) {
             Kill();
             return;
         }
         Invoke("EnableDamage", invCooldown);
+        OnDamage.Invoke();
     }
 
-    public void Kill() {
-        OnDeath.Invoke();
-        print("L bozo you fucking died");
-    }
-    public void Respawn() {
-        OnRespawn.Invoke();
-    }
+    public void Kill() => OnDeath.Invoke();
+    public void Respawn() => OnRespawn.Invoke();
 
     void EnableDamage() => canBeDamaged = true;
 }

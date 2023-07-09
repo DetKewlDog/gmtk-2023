@@ -36,13 +36,16 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Enemy.cs" />
+     <Compile Include="Assets\Scripts\BloodSpawner.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\DamageOnTouch.cs" />
+     <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\Health.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Table.cs" />
      <Compile Include="Assets\Scripts\ThrowableHandler.cs" />
      <Compile Include="Assets\Scripts\WeaponHandler.cs" />
+     <Compile Include="Assets\Scripts\WeaponPicker.cs" />
      <Compile Include="Assets\Scripts\WeaponSO.cs" />
      <None Include="Assets\Resources\Shaders\OutlineShader.shader" />
     <Reference Include="UnityEngine">

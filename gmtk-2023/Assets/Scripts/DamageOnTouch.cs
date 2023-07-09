@@ -13,6 +13,9 @@ public class DamageOnTouch : MonoBehaviour
         if (other.TryGetComponent<Health>(out health)
             && (targetLayers.value & (1 << other.gameObject.layer)) != 0) {
             health.Damage(damageToApply);
+            Vector2 direction = (other.transform.position - transform.position).normalized;
+            int knockbackMultipler = other.CompareTag("Player") ? 1000 : 100;
+            other.GetComponent<Rigidbody2D>().AddForce(direction * knockbackMultipler);
         }
     }
     void OnTriggerStay2D(Collider2D other) => OnTriggerEnter2D(other);
