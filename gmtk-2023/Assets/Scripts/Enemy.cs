@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -8,19 +7,22 @@ public class Enemy : MonoBehaviour
     private Health health;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    private NavMeshAgent agent;
 
     void Start() {
         health = GetComponent<Health>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = agent.updateUpAxis = false;
     }
 
     void FixedUpdate() {
-        if (health.currentHealth == 0) return;
+        if (health.currentHealth <= 0) return;
         target = target ?? PlayerController.instance.transform;
         if (target == null) return;
         Vector2 direction = target.position - transform.position;
         sr.flipX = direction.x < 0;
-        rb.AddForce(direction * 5);
+        agent.SetDestination(target.position);
     }
 }
