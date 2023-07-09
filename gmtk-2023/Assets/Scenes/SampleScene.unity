@@ -4711,7 +4711,7 @@ PrefabInstance:
     - target: {fileID: 4924466666558488620, guid: e4974a13f78a8c442a1d0602d5ad93b4,
         type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Chef
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4974a13f78a8c442a1d0602d5ad93b4, type: 3}

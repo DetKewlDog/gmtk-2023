@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     void Start() {
         health = GetComponent<Health>();
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
+        sr = GetComponentInChildren<SpriteRenderer>();
     }
 
     void FixedUpdate() {
