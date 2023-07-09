@@ -17,12 +17,12 @@ public class Health : MonoBehaviour
         if (!canBeDamaged) return;
         canBeDamaged = false;
         currentHealth -= damageAmount;
+        OnDamage.Invoke();
         if (currentHealth <= 0) {
             Kill();
             return;
         }
         Invoke("EnableDamage", invCooldown);
-        OnDamage.Invoke();
     }
 
     public void Kill() => OnDeath.Invoke();

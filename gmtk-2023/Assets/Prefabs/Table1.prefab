@@ -191,7 +191,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 3.625, y: 5.25, z: 0.1}
+  m_Extents: {x: 3.125, y: 4.75, z: 0.1}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -491,6 +491,8 @@ MonoBehaviour:
   weapon: {fileID: 11400000, guid: 9f1eedc5c6cf16b4d95936a8eb63fc07, type: 2}
   pickedSprite: {fileID: -4672483849975595500, guid: 82491c2c6bdddcc4ab8696459a5b64d5,
     type: 3}
+  oldMaterial: {fileID: 0}
+  initialized: 0
 --- !u!61 &2573183580524563058
 BoxCollider2D:
   m_ObjectHideFlags: 0

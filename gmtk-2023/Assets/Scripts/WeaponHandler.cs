@@ -4,15 +4,20 @@ public class WeaponHandler : MonoBehaviour
 {
     public GameObject bloodEffect;
     public WeaponSO currentWeapon;
+    public AudioClip attackSFX;
+    public AudioClip throwKillSFX;
     Camera mainCamera;
     GameObject currentWeaponGO;
     DamageOnTouch dot;
     bool isAttacking = false;
 
     float distanceFromPlayer = 1.25f;
+    AudioSource sfx;
 
-
-    void Start() => mainCamera = Camera.main;
+    void Start() {
+        mainCamera = Camera.main;
+        sfx = gameObject.AddComponent<AudioSource>();
+    }
 
     void Update() {
         if (!currentWeaponGO) return;
@@ -32,11 +37,14 @@ public class WeaponHandler : MonoBehaviour
 
     System.Collections.IEnumerator Attack() {
         isAttacking = true;
+        sfx.clip = attackSFX;
+        sfx.Play();
         dot.enabled = true;
         distanceFromPlayer = 2.5f;
         var waitForEndOfFrame = new WaitForEndOfFrame();
         Vector2 scale = Vector2.one;
         for (float i = 0; i < 0.2f * 60; i++) {
+            if (!currentWeaponGO) yield break;
             distanceFromPlayer = Mathf.Lerp(1.25f, 3.5f, i / (0.2f * 60));
             scale.x = Mathf.Lerp(1, 1.1f, i / (0.2f * 60));
             currentWeaponGO.transform.localScale = scale;
@@ -44,6 +52,7 @@ public class WeaponHandler : MonoBehaviour
         }
         dot.enabled = false;
         for (float i = 0; i < 0.2f * 60; i++) {
+            if (!currentWeaponGO) yield break;
             distanceFromPlayer = Mathf.Lerp(3.5f, 1.25f, i / (0.2f * 60));
             scale.x = Mathf.Lerp(1.1f, 1, i / (0.2f * 60));
             currentWeaponGO.transform.localScale = scale;
@@ -79,12 +88,15 @@ public class WeaponHandler : MonoBehaviour
     void ThrowWeapon() {
         currentWeaponGO.transform.SetParent(null);
         var rb = currentWeaponGO.GetComponent<Rigidbody2D>();
+        currentWeaponGO.GetComponent<Collider2D>().isTrigger = true;
         Vector2 direction = (mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
         rb.AddForce(Vector2.one * direction / 2);
         dot.enabled = true;
         dot.damageToApply *= 10;
         var handler = currentWeaponGO.AddComponent<ThrowableHandler>();
         handler.bloodEffect = bloodEffect;
+        handler.weapon = currentWeapon;
+        handler.throwKillSFX = throwKillSFX;
         currentWeaponGO = null;
         currentWeapon = null;
     }

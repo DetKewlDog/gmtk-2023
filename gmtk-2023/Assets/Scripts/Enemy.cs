@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent agent;
 
     void Start() {
-        health = GetComponent<Health>();
+        // Physics2D.IgnoreCollision(PlayerController.instance.GetComponent<Collider2D>(), transform.GetChild(0).GetComponent<Collider2D>());
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
         agent = GetComponent<NavMeshAgent>();
@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     }
 
     void FixedUpdate() {
+        health = health ?? GetComponent<Health>();
         if (health.currentHealth <= 0) return;
         target = target ?? PlayerController.instance.transform;
         if (target == null) return;
